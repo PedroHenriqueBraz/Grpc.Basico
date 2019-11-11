@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "grpc.basico.server";
+
+package Sensor;
+
+service Sensor {
+
+  rpc GetLastSensorData (SensorRequest) returns (SensorResponse);
+
+  rpc GetSensorData (SensorRequest) returns (stream SensorResponse);
+
+  //rpc GetSensors () return (stream );
+}
+
+message SensorRequest {
+  int32 sensor_id = 1;
+}
+
+message SensorResponse {
+  double position_x  = 1;
+  double position_y = 2;
+  double temperature = 3;
+}
