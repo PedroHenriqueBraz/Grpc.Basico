@@ -31,7 +31,7 @@ namespace grpc.basico.server
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<SensorService>();
+                endpoints.MapGrpcService<SensorController>();
 
                 endpoints.MapGet("/", async context =>
                 {
