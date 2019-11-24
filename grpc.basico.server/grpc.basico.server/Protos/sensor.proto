@@ -12,7 +12,10 @@ service SensorService {
 
   rpc GetAllData (google.protobuf.Empty) returns (stream SensorResponse);
 
-  //rpc GetSensors () return (stream );
+  rpc AddPhoto (stream AddPhotoRequest) returns (AddPhotoResponse);
+
+  rpc AddNewSensor (stream SensorAddRequest) returns (stream SensorResponse);
+
 }
 
 message SensorRequest {
@@ -22,9 +25,22 @@ message SensorRequest {
 message SensorResponse {
 	Sensor sensor = 1;
 }
+
+message SensorAddRequest {
+	Sensor sensor = 1;
+}
+
 message Sensor {
   int32 id = 1;
   double position_x  = 2;
   double position_y = 3;
   double temperature = 4;
 }
+
+message AddPhotoRequest {
+  bytes data = 1;
+}
+message AddPhotoResponse {
+  bool isOk = 1;
+}
+
