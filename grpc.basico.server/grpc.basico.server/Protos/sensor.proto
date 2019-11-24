@@ -6,16 +6,11 @@ import "google/protobuf/empty.proto";
 
 package Sensor;
 
-service SensorService {
-
-  rpc GetSensorData (SensorRequest) returns (SensorResponse);
-
-  rpc GetAllData (google.protobuf.Empty) returns (stream SensorResponse);
-
-  rpc AddPhoto (stream AddPhotoRequest) returns (AddPhotoResponse);
-
-  rpc AddNewSensor (stream SensorAddRequest) returns (stream SensorResponse);
-
+message Sensor {
+  int32 id = 1;
+  double position_x  = 2;
+  double position_y = 3;
+  double temperature = 4;
 }
 
 message SensorRequest {
@@ -30,17 +25,25 @@ message SensorAddRequest {
 	Sensor sensor = 1;
 }
 
-message Sensor {
-  int32 id = 1;
-  double position_x  = 2;
-  double position_y = 3;
-  double temperature = 4;
-}
-
 message AddPhotoRequest {
   bytes data = 1;
 }
+
 message AddPhotoResponse {
-  bool isOk = 1;
+  bool is_ok = 1;
 }
+
+service SensorService {
+
+  rpc GetSensorData (SensorRequest) returns (SensorResponse);
+
+  rpc GetAllData (google.protobuf.Empty) returns (stream SensorResponse);
+
+  rpc AddPhoto (stream AddPhotoRequest) returns (AddPhotoResponse);
+
+  rpc AddNewSensor (stream SensorAddRequest) returns (stream SensorResponse);
+
+}
+
+
 
