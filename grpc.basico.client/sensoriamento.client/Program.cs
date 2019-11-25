@@ -27,7 +27,6 @@ namespace sensoriamento.client
 
         private static async Task<bool> Menu(SensorService.SensorServiceClient sensorClient)
         {
-          //  Console.Clear();
             Console.WriteLine("\n 1 - Get sensor data \n " +
                                "2 - Get all sensors data \n " +
                                "3 - Upload file \n " +
