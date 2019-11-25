@@ -17,23 +17,55 @@ namespace sensoriamento.client
 
             var sensorClient = new SensorService.SensorServiceClient(channel);
 
-            //GetSensorData(sensorClient).Wait();
+            bool menu = true;
+            while (menu)
+            {
+                menu = await Menu(sensorClient);
+            }
 
-            //  GetAllSensorDatas(sensorClient).Wait();
-
-            // UploadPhoto(sensorClient).Wait();
-
-            AddNewSensor(sensorClient).Wait();
         }
 
+        private static async Task<bool> Menu(SensorService.SensorServiceClient sensorClient)
+        {
+          //  Console.Clear();
+            Console.WriteLine("\n 1 - Get sensor data \n " +
+                               "2 - Get all sensors data \n " +
+                               "3 - Upload file \n " +
+                               "4 - Add new sensors \n " + 
+                               "5 - Sair");
+
+            var op = Convert.ToInt32(Console.ReadLine());
+
+            switch (op)
+            {
+                case 1:
+                    await GetSensorData(sensorClient);
+                    return true;
+                case 2:
+                    await GetAllSensorData(sensorClient);
+                    return true;
+                case 3:
+                    await UploadPhoto(sensorClient);
+                    return true;
+                case 4:
+                    await AddNewSensor(sensorClient);
+                    return true;
+                case 5:
+                    return false;
+            }
+            return false;
+        }
         private static async Task GetSensorData(SensorService.SensorServiceClient sensorClient)
         {
             Metadata md = new Metadata();
             md.Add("my-token","testeToken123");
 
+            Console.WriteLine("id: ");
+            var sensorId = Convert.ToInt32(Console.ReadLine());
+
             try
             {
-                var sensor = await sensorClient.GetSensorDataAsync(new SensorRequest() { SensorId = 5 }, md);
+                var sensor = await sensorClient.GetSensorDataAsync(new SensorRequest() { SensorId = sensorId}, md);
                 Console.WriteLine(sensor.Sensor);
             }
             catch (Exception e)
@@ -43,7 +75,7 @@ namespace sensoriamento.client
 
         }
 
-        private static async Task GetAllSensorDatas(SensorService.SensorServiceClient sensorClient)
+        private static async Task GetAllSensorData(SensorService.SensorServiceClient sensorClient)
         {
             using (var call = sensorClient.GetAllData(new Google.Protobuf.WellKnownTypes.Empty()))
             {
